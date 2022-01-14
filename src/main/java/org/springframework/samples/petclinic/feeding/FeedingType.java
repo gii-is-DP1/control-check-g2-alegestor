@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.feeding;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -33,7 +34,7 @@ public class FeedingType {
     @NotEmpty
     String description;
 
-    @OneToMany(mappedBy = "pet_type")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "pet_type")
     @Column(name = "pet_type_id")
     @NotNull
     PetType petType;

@@ -11,8 +11,13 @@ public class FeedingService {
 	@Autowired
 	private FeedingService feedingService;
 
+    @Autowired
+	public FeedingService(FeedingRepository feedingRepository) {
+		this.feedingRepository = feedingRepository;
+	}	
+
     public List<Feeding> getAll(){
-        return null;
+        return feedingRepository.findAll();
     }
 
     public List<FeedingType> getAllFeedingTypes(){
@@ -20,10 +25,12 @@ public class FeedingService {
     }
 
     public FeedingType getFeedingType(String typeName) {
-        return null;
+        return feedingRepository.getFeedingType(typeName);
     }
 
     public Feeding save(Feeding p) throws UnfeasibleFeedingException {
+        if(!p.pet.getType().equals(p.feedingType.petType)) throw new UnfeasibleFeedingException();
+        else feedingRepository.save(p);
         return null;       
     }
 

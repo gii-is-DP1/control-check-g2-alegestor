@@ -2,9 +2,12 @@ package org.springframework.samples.petclinic.feeding;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -21,7 +24,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "feedings")
-
 public class Feeding {
 
     @Id
@@ -38,6 +40,10 @@ public class Feeding {
     
     @NotNull
     @NotEmpty
-    @OneToMany(mappedBy = "feeding")
-    Pet pet;   
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "feeding")
+    Pet pet;
+    
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "feeding")
+    @Column(name = "feeding_type")
+    FeedingType feedingType;
 }
