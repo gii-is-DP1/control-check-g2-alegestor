@@ -2,7 +2,15 @@ package org.springframework.samples.petclinic.feeding;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class FeedingService {
+
+    private FeedingRepository feedingRepository;	
+	
+	@Autowired
+	private FeedingService feedingService;
+
     public List<Feeding> getAll(){
         return null;
     }
