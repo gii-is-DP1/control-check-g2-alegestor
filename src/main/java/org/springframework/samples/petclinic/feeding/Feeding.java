@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -28,9 +30,11 @@ public class Feeding {
     LocalDate startDate;
 
     @Column(name = "week_duration")
+    @Min(value = 1l)
     double weeksDuration;
     
     @NotNull
     @NotEmpty
+    @OneToMany(mappedBy = "feeding")
     Pet pet;   
 }
