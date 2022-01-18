@@ -13,8 +13,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.pet.Pet;
 
 import lombok.Getter;
@@ -24,26 +26,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "feedings")
-public class Feeding {
-
-    @Id
-    Integer id;
+public class Feeding extends BaseEntity{
 
     @Column(name = "start_date")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
-    @NotEmpty
+    @NotNull
     LocalDate startDate;
 
-    @Column(name = "week_duration")
-    @Min(value = 1l)
+    @Column(name = "weeks_duration")
+    @Positive
+    @NotNull
     double weeksDuration;
     
     @NotNull
-    @NotEmpty
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "feeding")
+    @ManyToOne
+    @JoinColumn(name = "pet_id")
     Pet pet;
     
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "feeding")
-    @Column(name = "feeding_type")
+    @ManyToOne
+    @JoinColumn(name = "feeding_type_id")
     FeedingType feedingType;
 }
